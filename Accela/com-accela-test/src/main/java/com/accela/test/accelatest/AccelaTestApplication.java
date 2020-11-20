@@ -8,6 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.accela.test.accelatest.controller.IScreenController;
 
+/**
+ * @author Igor
+ *
+ */
 @SpringBootApplication
 public class AccelaTestApplication implements ApplicationRunner {
 	
@@ -24,6 +28,5 @@ public class AccelaTestApplication implements ApplicationRunner {
 		screen.start();		
 		
 	}
-
 	
 }

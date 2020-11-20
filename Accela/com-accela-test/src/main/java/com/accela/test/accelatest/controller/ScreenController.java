@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import com.accela.test.accelatest.entity.Person;
+import com.accela.test.accelatest.entity.PersonTableEntity;
 
 /**
  * @author Igor
@@ -37,26 +37,31 @@ public class ScreenController implements IScreenController {
 
 	}
 
+	/**
+	 * Entry method
+	 * 
+	 *
+	 */
 	public void start() {
 
 		String option = displayOptionsScreen();		
 
 		switch (option) {
 
-		case "1":
+		case "1": //Create Person
 
 			Boolean createNew = true; 
 			boolean newObject = true;
-			Person person = null;
+			PersonTableEntity person = null;
 			String name = null;
 			String surName = null;
-			List<Person> persons = new ArrayList<Person>();
+			List<PersonTableEntity> persons = new ArrayList<PersonTableEntity>();
 
 			while (createNew) {
 
 				if (newObject) {
 
-					person = new Person();
+					person = new PersonTableEntity();
 
 				}
 
