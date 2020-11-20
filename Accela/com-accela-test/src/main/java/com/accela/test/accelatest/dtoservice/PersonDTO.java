@@ -1,5 +1,9 @@
 package com.accela.test.accelatest.dtoservice;
 
+/**
+ * @author Igor
+ *
+ */
 public class PersonDTO extends BaseDTOObject {
 	
 	private Integer id;

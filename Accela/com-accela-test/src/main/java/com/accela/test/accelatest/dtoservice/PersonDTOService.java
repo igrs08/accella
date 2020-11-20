@@ -1,6 +1,7 @@
 package com.accela.test.accelatest.dtoservice;
 import java.util.Objects;
 
+import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import com.accela.test.accelatest.entity.PersonTableEntity;
@@ -9,6 +10,7 @@ import com.accela.test.accelatest.entity.PersonTableEntity;
  * @author Igor
  *
  */
+@Component
 public class PersonDTOService extends BaseDTOService<PersonTableEntity, PersonDTO> {
 
 	@Override

@@ -4,10 +4,14 @@ import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import com.accela.test.accelatest.entity.PersonTableEntity;
+import com.accela.test.accelatest.dtoservice.PersonDTO;
+import com.accela.test.accelatest.manager.IPersonBusinessManager;
 
 /**
  * @author Igor
@@ -15,8 +19,13 @@ import com.accela.test.accelatest.entity.PersonTableEntity;
  */
 @Component
 public class ScreenController implements IScreenController {
+	
+	private Logger logger = LoggerFactory.getLogger(ScreenController.class);
 
 	private Console console = System.console();
+	
+	@Autowired
+	private IPersonBusinessManager personBusinessManager;
 
 	/**
 	 * Show the initial screen with options
@@ -49,19 +58,21 @@ public class ScreenController implements IScreenController {
 		switch (option) {
 
 		case "1": //Create Person
+			
+			logger.info("Creating Person(s)");
 
 			Boolean createNew = true; 
-			boolean newObject = true;
-			PersonTableEntity person = null;
+			Boolean newObject = true;
+			PersonDTO person = null;
 			String name = null;
 			String surName = null;
-			List<PersonTableEntity> persons = new ArrayList<PersonTableEntity>();
+			List<PersonDTO> persons = new ArrayList<PersonDTO>();
 
 			while (createNew) {
 
 				if (newObject) {
 
-					person = new PersonTableEntity();
+					person = new PersonDTO();
 
 				}
 
@@ -109,14 +120,15 @@ public class ScreenController implements IScreenController {
 				createNew = console.readLine().equalsIgnoreCase("Y") ? true : false;
 
 				if (!createNew) {
+					
+					//Call to persist the list of created persons
+					personBusinessManager.saveAll(persons);
 
 					displayOptionsScreen();
 
 				}
 
 			}
-			
-			//Call to persist the list of created persons
 
 			break;
 

@@ -14,8 +14,7 @@ import org.springframework.util.StringUtils;
 
 public abstract class BaseDTOService<E extends BaseEntity, D extends BaseDTOObject> {
 
-	@Autowired
-	protected ModelMapper modelMapper;
+	protected ModelMapper modelMapper = new ModelMapper();
 
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 

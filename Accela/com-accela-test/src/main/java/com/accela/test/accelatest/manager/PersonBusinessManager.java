@@ -1,0 +1,58 @@
+package com.accela.test.accelatest.manager;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.accela.test.accelatest.controller.ScreenController;
+import com.accela.test.accelatest.dtoservice.PersonDTO;
+import com.accela.test.accelatest.dtoservice.PersonDTOService;
+import com.accela.test.accelatest.entity.PersonTableEntity;
+import com.accela.test.accelatest.service.IPersonBusinessService;
+
+/**
+ * @author Igor
+ *
+ */
+@Component
+public class PersonBusinessManager implements IPersonBusinessManager{
+	
+	private Logger logger = LoggerFactory.getLogger(PersonBusinessManager.class);
+	
+	@Autowired
+	private IPersonBusinessService personBusinessService;
+	
+	@Autowired	
+	private PersonDTOService personDTOService;
+	
+	public void saveAll(List<PersonDTO> persons) {
+		
+		logger.info("Salving Person(s)");
+		
+		List<PersonTableEntity> personEntities = new ArrayList<PersonTableEntity>();
+		
+		try {
+			
+			for(PersonDTO person : persons) {
+				
+				personEntities.add(personDTOService.convertDtoToEntity(person));
+				
+			}
+			
+			logger.info("Person(s) converted from dto to entity");
+					
+			personBusinessService.saveAll(personEntities);
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			
+		}		
+		
+	}
+
+}
