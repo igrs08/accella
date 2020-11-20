@@ -1,17 +1,28 @@
-package com.accela.test.comaccelatest;
+package com.accela.test.accelatest.controller;
 
 import java.io.Console;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import com.accela.test.comaccelatest.entity.Person;
+import com.accela.test.accelatest.entity.Person;
 
+/**
+ * @author Igor
+ *
+ */
 @Component
-public class Screen implements IScreen {
+public class ScreenController implements IScreenController {
 
 	private Console console = System.console();
 
+	/**
+	 * Show the initial screen with options
+	 * 
+	 * @return
+	 */
 	private String displayOptionsScreen() {
 
 		System.out.println("\n(1) Create a new User. ");
@@ -28,18 +39,18 @@ public class Screen implements IScreen {
 
 	public void start() {
 
-		String option = displayOptionsScreen();
-
-		Boolean createNew = true;
+		String option = displayOptionsScreen();		
 
 		switch (option) {
 
 		case "1":
 
+			Boolean createNew = true; 
 			boolean newObject = true;
 			Person person = null;
 			String name = null;
 			String surName = null;
+			List<Person> persons = new ArrayList<Person>();
 
 			while (createNew) {
 
@@ -85,6 +96,9 @@ public class Screen implements IScreen {
 				}
 
 				newObject = true;
+				
+				//Add to list of created persons
+				persons.add(person);
 
 				System.out.print("(Y) To create a new User (N) Return to the Initial Screen: ");
 				createNew = console.readLine().equalsIgnoreCase("Y") ? true : false;
@@ -96,6 +110,8 @@ public class Screen implements IScreen {
 				}
 
 			}
+			
+			//Call to persist the list of created persons
 
 			break;
 

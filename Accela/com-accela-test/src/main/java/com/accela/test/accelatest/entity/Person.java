@@ -1,4 +1,4 @@
-package com.accela.test.comaccelatest.entity;
+package com.accela.test.accelatest.entity;
 
 public class Person {
 	
