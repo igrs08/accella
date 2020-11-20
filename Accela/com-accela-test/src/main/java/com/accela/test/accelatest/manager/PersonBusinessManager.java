@@ -37,13 +37,15 @@ public class PersonBusinessManager implements IPersonBusinessManager{
 		
 		try {
 			
+			logger.info("These are the people before converting : " + persons.get(0).getName() +" " + persons.get(0).getSurName());
+			
 			for(PersonDTO person : persons) {
 				
 				personEntities.add(personDTOService.convertDtoToEntity(person));
 				
-			}
-			
-			logger.info("Person(s) converted from dto to entity");
+			}			
+		
+			logger.info("These are the people after converting : " + personEntities.get(0).getName() +" " + personEntities.get(0).getSurName());
 					
 			personBusinessService.saveAll(personEntities);
 			

@@ -22,8 +22,8 @@ public class PersonDTOService extends BaseDTOService<PersonTableEntity, PersonDT
 
 		PersonDTO personDTO = new PersonDTO();
 		personDTO.setId(person.getId());
-		personDTO.setName(ObjectUtils.isEmpty(person.getName()) ? person.getName() : "");
-		personDTO.setSurName(ObjectUtils.isEmpty(person.getSurName()) ? person.getSurName() : "");
+		personDTO.setName(!ObjectUtils.isEmpty(person.getName()) ? person.getName() : "");
+		personDTO.setSurName(!ObjectUtils.isEmpty(person.getSurName()) ? person.getSurName() : "");
 
 		return personDTO;
 	}
@@ -39,8 +39,8 @@ public class PersonDTOService extends BaseDTOService<PersonTableEntity, PersonDT
 			
 		}
 		
-		person.setName(ObjectUtils.isEmpty(personDTO.getName()) ? personDTO.getName() : "");
-		person.setSurName(ObjectUtils.isEmpty(person.getSurName()) ? person.getSurName() : "");
+		person.setName(!ObjectUtils.isEmpty(personDTO.getName()) ? personDTO.getName() :"");
+		person.setSurName(!ObjectUtils.isEmpty(personDTO.getSurName()) ? personDTO.getSurName() : "");
 		
 		return person;
 
