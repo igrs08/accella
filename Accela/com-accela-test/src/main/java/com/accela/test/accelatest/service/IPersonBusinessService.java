@@ -1,5 +1,7 @@
 package com.accela.test.accelatest.service;
 
+import java.util.List;
+
 import com.accela.test.accelatest.entity.PersonTableEntity;
 
 
@@ -9,6 +11,8 @@ import com.accela.test.accelatest.entity.PersonTableEntity;
  */
 public interface IPersonBusinessService {
 	
-	public void saveAll(Iterable<PersonTableEntity> iterable);	
+	public void saveAll(Iterable<PersonTableEntity> iterable);
+
+	public List<PersonTableEntity> findAll();	
 
 }

@@ -19,9 +19,9 @@ import com.accela.test.accelatest.service.IPersonBusinessService;
  *
  */
 @Component
-public class PersonBusinessManager implements IPersonBusinessManager{
+public class PersonBusinessManagerImpl implements IPersonBusinessManager{
 	
-	private Logger logger = LoggerFactory.getLogger(PersonBusinessManager.class);
+	private Logger logger = LoggerFactory.getLogger(PersonBusinessManagerImpl.class);
 	
 	@Autowired
 	private IPersonBusinessService personBusinessService;
@@ -55,6 +55,15 @@ public class PersonBusinessManager implements IPersonBusinessManager{
 			
 		}		
 		
+	}
+
+	@Override
+	public List<PersonDTO> findAll() {
+		
+		List<PersonTableEntity> persons = personBusinessService.findAll();
+		
+		return personDTOService.convertEntityToDto(persons);		
+				
 	}
 
 }

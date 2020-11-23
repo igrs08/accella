@@ -8,4 +8,6 @@ public interface IPersonBusinessManager {
 	
 	public void saveAll(List<PersonDTO> persons);
 
+	public List<PersonDTO> findAll();
+
 }
