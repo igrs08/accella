@@ -22,4 +22,6 @@ public interface IPersonBusinessService {
 
 	public Optional<PersonTableEntity> findById(Integer id);
 
+	public List<PersonTableEntity> findPerson(String data);
+
 }

@@ -56,7 +56,7 @@ public class ScreenController implements IScreenController {
 		if(persons.isEmpty()) {
 			
 			System.out.println("There is no any person at the moment!\n");		
-			System.out.println("(1) Create new person (Anything) To return to the Initial Screen");
+			System.out.println("(1) Create new person (Anything) (2) Search person (Anything)To return to the Initial Screen");
 			
 			System.out.print("What would you like to do? : ");
 			
@@ -68,8 +68,13 @@ public class ScreenController implements IScreenController {
 		
 					createNewPerson();		
 					break;
+					
+				case "2": // Search Person
+					
+					search();		
+					break;
 		
-				default : //Search
+				default : 
 					
 					start();		
 					break;
@@ -269,7 +274,9 @@ public class ScreenController implements IScreenController {
 				break;
 	
 			case "2": //Search
-	
+				
+				search();
+				
 				break;
 				
 			case "3": //List
@@ -288,6 +295,28 @@ public class ScreenController implements IScreenController {
 
 		}
 
+	}
+
+	private void search() {
+		
+		while(true) {
+			
+			System.out.print("Type any person data: ");
+			String data = console.readLine();
+			
+			if(!ObjectUtils.isEmpty(data)) {
+				
+				listPersons(personBusinessManager.findPerson(data));
+				break;
+				
+			}else {
+				
+				continue;				
+				
+			}		
+			
+		}
+		
 	}
 
 	private void createNewPerson() {

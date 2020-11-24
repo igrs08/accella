@@ -100,4 +100,17 @@ public class PersonBusinessManagerImpl implements IPersonBusinessManager{
 		
 	}
 
+	@Override
+	public List<PersonDTO> findPerson(String data) {
+		
+		List<PersonTableEntity> listPerson = personBusinessService.findPerson(data);
+		
+		if(!listPerson.isEmpty()) {
+			return personDTOService.convertEntityToDto(listPerson);
+		}
+				
+		return new ArrayList<PersonDTO>();
+		
+	}
+
 }

@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.accela.test.accelatest.IPersonRepository;
 import com.accela.test.accelatest.entity.PersonTableEntity;
+import com.accela.test.accelatest.repository.IPersonRepository;
 
 /**
  * @author Igor
@@ -60,6 +60,12 @@ public class PersonBusinessServiceImpl implements IPersonBusinessService {
 	public Optional<PersonTableEntity> findById(Integer id){				
 					
 		return personRepository.findById(id);
+	}
+
+	@Override
+	public List<PersonTableEntity> findPerson(String data) {
+		
+		return personRepository.findPerson("%" +data + "%");
 	}	
 
 }

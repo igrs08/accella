@@ -16,4 +16,6 @@ public interface IPersonBusinessManager {
 
 	public PersonDTO findPersonById(Integer id);
 
+	public List<PersonDTO>  findPerson(String data);
+
 }
