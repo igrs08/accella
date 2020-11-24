@@ -2,6 +2,7 @@ package com.accela.test.accelatest.manager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +65,39 @@ public class PersonBusinessManagerImpl implements IPersonBusinessManager{
 		
 		return personDTOService.convertEntityToDto(persons);		
 				
+	}
+
+	@Override
+	public void delete(Integer id) {
+		
+		personBusinessService.delete(id);
+		
+	}
+
+	@Override
+	public void save(PersonDTO personDto) {
+		
+		PersonTableEntity person = personDTOService.convertDtoToEntity(personDto);
+		
+		personBusinessService.save(person);
+		
+	}
+
+	@Override
+	public PersonDTO findPersonById(Integer id) {
+					
+		Optional<PersonTableEntity> personOptional = personBusinessService.findById(id);
+		
+		if (personOptional.isPresent()) {
+			
+			return personDTOService.convertEntityToDto(personOptional.get());
+			
+		}else {
+			
+			return new PersonDTO();
+			
+		}
+		
 	}
 
 }

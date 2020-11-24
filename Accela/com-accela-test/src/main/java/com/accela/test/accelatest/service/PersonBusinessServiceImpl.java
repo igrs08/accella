@@ -1,6 +1,7 @@
 package com.accela.test.accelatest.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +34,32 @@ public class PersonBusinessServiceImpl implements IPersonBusinessService {
 	@Override
 	public List<PersonTableEntity> findAll() {
 		
+		logger.info("Findind Person(s)");
+		
 		return personRepository.findAll();
 		
+	}
+
+	@Override
+	public void delete(Integer id) {
+		
+		logger.info("Deleting person id = " + id);
+		
+		personRepository.deleteById(id);
+		
+	}
+
+	@Override
+	public void save(PersonTableEntity person) {
+			
+		personRepository.save(person);
+		
+	}
+
+	@Override
+	public Optional<PersonTableEntity> findById(Integer id){				
+					
+		return personRepository.findById(id);
 	}	
 
 }

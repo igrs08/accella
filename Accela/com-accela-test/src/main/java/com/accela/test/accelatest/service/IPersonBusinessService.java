@@ -1,6 +1,7 @@
 package com.accela.test.accelatest.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.accela.test.accelatest.entity.PersonTableEntity;
 
@@ -13,6 +14,12 @@ public interface IPersonBusinessService {
 	
 	public void saveAll(Iterable<PersonTableEntity> iterable);
 
-	public List<PersonTableEntity> findAll();	
+	public List<PersonTableEntity> findAll();
+
+	public void delete(Integer id);
+
+	public void save(PersonTableEntity person);
+
+	public Optional<PersonTableEntity> findById(Integer id);
 
 }

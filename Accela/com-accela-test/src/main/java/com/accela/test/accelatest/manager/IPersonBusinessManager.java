@@ -10,4 +10,10 @@ public interface IPersonBusinessManager {
 
 	public List<PersonDTO> findAll();
 
+	public void delete(Integer id);
+
+	public void save(PersonDTO person);
+
+	public PersonDTO findPersonById(Integer id);
+
 }

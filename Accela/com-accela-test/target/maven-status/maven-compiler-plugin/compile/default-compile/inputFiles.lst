@@ -8,7 +8,7 @@
 /home/linux-robot/Programming/Projects-Code/CompaniesTest/Accela/accella/Accela/com-accela-test/src/main/java/com/accela/test/accelatest/controller/IScreenController.java
 /home/linux-robot/Programming/Projects-Code/CompaniesTest/Accela/accella/Accela/com-accela-test/src/main/java/com/accela/test/accelatest/manager/IPersonBusinessManager.java
 /home/linux-robot/Programming/Projects-Code/CompaniesTest/Accela/accella/Accela/com-accela-test/src/main/java/com/accela/test/accelatest/dtoservice/BaseEntity.java
-/home/linux-robot/Programming/Projects-Code/CompaniesTest/Accela/accella/Accela/com-accela-test/src/main/java/com/accela/test/accelatest/manager/PersonBusinessManager.java
+/home/linux-robot/Programming/Projects-Code/CompaniesTest/Accela/accella/Accela/com-accela-test/src/main/java/com/accela/test/accelatest/manager/PersonBusinessManagerImpl.java
 /home/linux-robot/Programming/Projects-Code/CompaniesTest/Accela/accella/Accela/com-accela-test/src/main/java/com/accela/test/accelatest/service/IPersonBusinessService.java
 /home/linux-robot/Programming/Projects-Code/CompaniesTest/Accela/accella/Accela/com-accela-test/src/main/java/com/accela/test/accelatest/AccelaTestApplication.java
 /home/linux-robot/Programming/Projects-Code/CompaniesTest/Accela/accella/Accela/com-accela-test/src/main/java/com/accela/test/accelatest/IPersonRepository.java
