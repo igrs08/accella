@@ -1,6 +1,7 @@
 package com.accela.test.accelatest.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,5 +16,9 @@ public interface IPersonRepository extends JpaRepository<PersonTableEntity, Inte
 
 	@Query("SELECT p FROM PersonTableEntity p LEFT JOIN FETCH p.addresses")
 	List<PersonTableEntity> findAllFetchAddress();
+	
+	@Query("SELECT p FROM PersonTableEntity p LEFT JOIN FETCH p.addresses WHERE p.id = :id")
+	Optional<PersonTableEntity> findByIdFetchAddress(@Param("id")Integer id);
+
 
 }

@@ -59,7 +59,7 @@ public class PersonBusinessServiceImpl implements IPersonBusinessService {
 	@Override
 	public Optional<PersonTableEntity> findById(Integer id){				
 					
-		return personRepository.findById(id);
+		return personRepository.findByIdFetchAddress(id);
 	}
 
 	@Override

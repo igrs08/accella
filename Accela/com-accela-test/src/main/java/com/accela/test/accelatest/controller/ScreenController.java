@@ -12,9 +12,6 @@ import org.springframework.util.ObjectUtils;
 
 import com.accela.test.accelatest.dtoservice.AddressDTO;
 import com.accela.test.accelatest.dtoservice.PersonDTO;
-import com.accela.test.accelatest.entity.AddressTableEntity;
-import com.accela.test.accelatest.entity.PersonTableEntity;
-import com.accela.test.accelatest.manager.IAddressBusinessManager;
 import com.accela.test.accelatest.manager.IPersonBusinessManager;
 
 /**
@@ -183,7 +180,7 @@ public class ScreenController implements IScreenController {
 
 					System.out.print("Edit the Address? (Y)Yes (N)No :");
 					Boolean editAddress = console.readLine().equalsIgnoreCase("Y") ? true : false;
-
+					
 					if (editAddress) {
 
 						editAddress(personEdit, true);
@@ -224,18 +221,48 @@ public class ScreenController implements IScreenController {
 			
 			clearConsole();
 			
-		}		
+		}	
+		
+		if (ObjectUtils.isEmpty(person.getAddresses())){
+			
+			System.out.println("There is no any Address for this person at the moment...");
+			System.out.println("");
+			System.out.println("(1) Add Address (Anything) To list persons");
+			
+			System.out.print("What would you like to do? ");
+			String option = console.readLine();
+			
+			switch(option){
+				
+				case "1" :
+					
+					logger.debug("Case 1: Creating...");
+					fillAddress(person);
+					System.out.println("Address created with success!");
+					return;
+				
+				default:					 
+					
+					return;				
+				
+			}
+			
+		}else {
+			
+			//Header
+			System.out.println("Id" + "\tStreet" + "\tCity" + "\tState" + "\tPostal Code");
+			
+			for (AddressDTO address : person.getAddresses()) {
 
-		System.out.println("Id" + "\tStreet" + "\tCity" + "\tState" + "\tPostal Code");
-		for (AddressDTO address : person.getAddresses()) {
+				System.out.println(address.getId() + "\t" + address.getStreet() + "\t" + address.getCity() + "\t"
+						+ address.getState() + "\t" + address.getPostalCode());
 
-			System.out.println(address.getId() + "\t" + address.getStreet() + "\t" + address.getCity() + "\t"
-					+ address.getState() + "\t" + address.getPostalCode());
-
-		}
-
-		System.out.println("");
-		System.out.println("(1) Delete address (2) Edit address");
+			}
+			
+			System.out.println("(1) Delete address (2) Edit address (Anything) To return to the initial screen");
+			
+		}				
+		
 		System.out.print("What would you like to do? ");
 		String option = console.readLine();
 
@@ -255,11 +282,11 @@ public class ScreenController implements IScreenController {
 	
 				// editPerson(persons);
 	
-			break;
+			break;		
 	
 			default:
 	
-				// start();
+				start();
 				break;
 	
 			}
@@ -285,32 +312,39 @@ public class ScreenController implements IScreenController {
 				List<AddressDTO> addresses = person.getAddresses();
 				
 				AddressDTO addressToBeRemoved = null;
-								
+				
+				//FIXME: Change that to Java 8 Style
 				for (AddressDTO address : addresses) {
 
 					if (address.getId() == Integer.valueOf(id)) {
 								
 						addressToBeRemoved = address;
+						break;
 
 					}
 
 				}
+				
+				if(ObjectUtils.isEmpty(addressToBeRemoved)) {
+					
+					System.out.println("Address id not found...\n");
+					continue;
+					
+				}
 			
 				person.getAddresses().remove(addressToBeRemoved);
 				
-				System.out.println("Address deleted with success!");
+				System.out.println("Address deleted with success!\n");
 
 				break;
 
 			} catch (NumberFormatException e) {
 				
-				logger.debug(e.getMessage());
-				e.printStackTrace();
+				logger.debug(e.getMessage());				
 				
 			} catch(Exception e) {
 				
 				logger.debug(e.getMessage());
-				e.printStackTrace();
 				
 			}				
 			
@@ -343,9 +377,9 @@ public class ScreenController implements IScreenController {
 				}
 
 				personBusinessManager.delete(Integer.valueOf(id));
-				logger.debug("Person deleted with success!");
+				System.out.println("Person deleted with success!");
 
-				listPersons(personBusinessManager.findAll(),true);
+				listPersons(personBusinessManager.findAll(),false);
 
 				break;
 

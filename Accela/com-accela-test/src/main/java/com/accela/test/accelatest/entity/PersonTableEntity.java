@@ -35,7 +35,7 @@ public class PersonTableEntity extends BaseEntity {
 	@Column
 	private String surName;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "person_id")
 	private List<AddressTableEntity> addresses;
 	
