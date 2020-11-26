@@ -1,4 +1,4 @@
-package com.accela.test.accelatest.dtoservice;
+package com.accela.test.dtoservice;
 
 /**
  * @author Igor

@@ -1,9 +1,9 @@
-package com.accela.test.accelatest.service;
+package com.accela.test.service;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.accela.test.accelatest.entity.PersonTableEntity;
+import com.accela.test.entity.PersonTableEntity;
 
 
 /**

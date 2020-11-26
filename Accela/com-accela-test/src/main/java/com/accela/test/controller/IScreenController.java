@@ -1,4 +1,4 @@
-package com.accela.test.accelatest.controller;
+package com.accela.test.controller;
 
 public interface IScreenController {
 	

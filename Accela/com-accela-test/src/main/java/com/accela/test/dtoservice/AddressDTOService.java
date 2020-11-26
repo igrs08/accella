@@ -1,11 +1,11 @@
-package com.accela.test.accelatest.dtoservice;
+package com.accela.test.dtoservice;
 import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import com.accela.test.accelatest.entity.AddressTableEntity;
-import com.accela.test.accelatest.entity.PersonTableEntity;
+import com.accela.test.entity.AddressTableEntity;
+import com.accela.test.entity.PersonTableEntity;
 
 /**
  * @author Igor

@@ -1,4 +1,4 @@
-package com.accela.test.accelatest.dtoservice;
+package com.accela.test.dtoservice;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

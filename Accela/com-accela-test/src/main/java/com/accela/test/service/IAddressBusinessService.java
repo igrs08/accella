@@ -1,11 +1,11 @@
-package com.accela.test.accelatest.service;
+package com.accela.test.service;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.accela.test.accelatest.dtoservice.AddressDTO;
-import com.accela.test.accelatest.entity.AddressTableEntity;
-import com.accela.test.accelatest.entity.PersonTableEntity;
+import com.accela.test.dtoservice.AddressDTO;
+import com.accela.test.entity.AddressTableEntity;
+import com.accela.test.entity.PersonTableEntity;
 
 
 /**

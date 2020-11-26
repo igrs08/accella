@@ -1,4 +1,4 @@
-package com.accela.test.accelatest.entity;
+package com.accela.test.entity;
 
 import java.util.List;
 
@@ -13,7 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.accela.test.accelatest.dtoservice.BaseEntity;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.accela.test.dtoservice.BaseEntity;
 
 /**
  * @author Igor
@@ -35,7 +38,8 @@ public class PersonTableEntity extends BaseEntity {
 	@Column
 	private String surName;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@Fetch(FetchMode.JOIN)
 	@JoinColumn(name = "person_id")
 	private List<AddressTableEntity> addresses;
 	

@@ -1,8 +1,8 @@
-package com.accela.test.accelatest.manager;
+package com.accela.test.manager;
 
 import java.util.List;
 
-import com.accela.test.accelatest.dtoservice.PersonDTO;
+import com.accela.test.dtoservice.PersonDTO;
 
 public interface IPersonBusinessManager {
 	

@@ -1,4 +1,4 @@
-package com.accela.test.accelatest.dtoservice;
+package com.accela.test.dtoservice;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 

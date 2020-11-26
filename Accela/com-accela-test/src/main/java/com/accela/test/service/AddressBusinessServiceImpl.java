@@ -1,4 +1,4 @@
-package com.accela.test.accelatest.service;
+package com.accela.test.service;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.accela.test.accelatest.dtoservice.AddressDTO;
-import com.accela.test.accelatest.entity.AddressTableEntity;
-import com.accela.test.accelatest.repository.IAddressRepository;
+import com.accela.test.dtoservice.AddressDTO;
+import com.accela.test.entity.AddressTableEntity;
+import com.accela.test.repository.IAddressRepository;
 
 @Service
 public class AddressBusinessServiceImpl implements IAddressBusinessService {
@@ -22,7 +22,7 @@ public class AddressBusinessServiceImpl implements IAddressBusinessService {
 	@Override
 	public void save(Iterable<AddressTableEntity> addresses) {
 		
-		logger.info("Calling the repository to save Person(s)");
+		logger.debug("Calling the repository to save Person(s)");
 		
 		addressRepository.saveAll(addresses);
 
@@ -31,7 +31,7 @@ public class AddressBusinessServiceImpl implements IAddressBusinessService {
 	@Override
 	public List<AddressTableEntity> findAll(Integer personId) {
 		
-		logger.info("Findind Address(s)");
+		logger.debug("Findind Address(s)");
 		
 		return addressRepository.findAll();
 	}
@@ -39,7 +39,7 @@ public class AddressBusinessServiceImpl implements IAddressBusinessService {
 	@Override
 	public void delete(Integer id) {
 		
-		logger.info("Deleting address id = " + id);
+		logger.debug("Deleting address id = " + id);
 		
 		addressRepository.deleteById(id);
 

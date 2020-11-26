@@ -1,4 +1,4 @@
-package com.accela.test.accelatest.entity;
+package com.accela.test.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.accela.test.accelatest.dtoservice.BaseEntity;
+import com.accela.test.dtoservice.BaseEntity;
 
 @Entity
 @Table(name="Address")

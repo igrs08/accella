@@ -1,4 +1,4 @@
-package com.accela.test.accelatest.manager;
+package com.accela.test.manager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.accela.test.accelatest.controller.ScreenController;
-import com.accela.test.accelatest.dtoservice.PersonDTO;
-import com.accela.test.accelatest.dtoservice.PersonDTOService;
-import com.accela.test.accelatest.entity.AddressTableEntity;
-import com.accela.test.accelatest.entity.PersonTableEntity;
-import com.accela.test.accelatest.service.IPersonBusinessService;
+import com.accela.test.controller.ScreenController;
+import com.accela.test.dtoservice.PersonDTO;
+import com.accela.test.dtoservice.PersonDTOService;
+import com.accela.test.entity.AddressTableEntity;
+import com.accela.test.entity.PersonTableEntity;
+import com.accela.test.service.IPersonBusinessService;
 
 /**
  * @author Igor
@@ -33,13 +33,13 @@ public class PersonBusinessManagerImpl implements IPersonBusinessManager{
 	
 	public void saveAll(List<PersonDTO> persons) {
 		
-		logger.info("Salving Person(s)");
+		logger.debug("Salving Person(s)");
 		
 		List<PersonTableEntity> personEntities = new ArrayList<PersonTableEntity>();
 		
 		try {
 			
-			logger.info("These are the people before converting : " + persons.get(0).getName() +" " + persons.get(0).getSurName());
+			logger.debug("These are the people before converting : " + persons.get(0).getName() +" " + persons.get(0).getSurName());
 			
 			for(PersonDTO person : persons) {
 				
@@ -47,7 +47,7 @@ public class PersonBusinessManagerImpl implements IPersonBusinessManager{
 				
 			}			
 		
-			logger.info("These are the people after converting : " + personEntities.get(0).getName() +" " + personEntities.get(0).getSurName());
+			logger.debug("These are the people after converting : " + personEntities.get(0).getName() +" " + personEntities.get(0).getSurName());
 					
 			
 			for(PersonTableEntity personTable : personEntities) {
