@@ -1,5 +1,7 @@
 package com.accela.test.accelatest.dtoservice;
 
+import java.util.List;
+
 /**
  * @author Igor
  *
@@ -9,6 +11,8 @@ public class PersonDTO extends BaseDTOObject {
 	private Integer id;
 	private String name;
 	private String surName;
+	
+	private List<AddressDTO> addresses;
 		
 	public Integer getId() {
 		return id;
@@ -32,7 +36,14 @@ public class PersonDTO extends BaseDTOObject {
 	
 	public void setSurName(String surName) {
 		this.surName = surName;
-	}	
-	
+	}
+
+	public List<AddressDTO> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<AddressDTO> addresses) {
+		this.addresses = addresses;
+	}		
 
 }

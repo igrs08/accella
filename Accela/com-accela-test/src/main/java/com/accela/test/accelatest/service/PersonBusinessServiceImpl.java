@@ -36,7 +36,7 @@ public class PersonBusinessServiceImpl implements IPersonBusinessService {
 		
 		logger.info("Findind Person(s)");
 		
-		return personRepository.findAll();
+		return personRepository.findAllFetchAddress();
 		
 	}
 

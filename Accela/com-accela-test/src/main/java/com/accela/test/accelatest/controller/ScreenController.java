@@ -10,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
+import com.accela.test.accelatest.dtoservice.AddressDTO;
 import com.accela.test.accelatest.dtoservice.PersonDTO;
+import com.accela.test.accelatest.entity.AddressTableEntity;
+import com.accela.test.accelatest.entity.PersonTableEntity;
+import com.accela.test.accelatest.manager.IAddressBusinessManager;
 import com.accela.test.accelatest.manager.IPersonBusinessManager;
 
 /**
@@ -26,6 +30,7 @@ public class ScreenController implements IScreenController {
 
 	@Autowired
 	private IPersonBusinessManager personBusinessManager;
+	
 
 	/**
 	 * Display the initial screen with options
@@ -33,227 +38,338 @@ public class ScreenController implements IScreenController {
 	 * @return
 	 */
 	private String displayOptionsScreen() {
-		
-		clear();
 
-		System.out.println("(1) Create a new Person");
-		System.out.println("(2) Search for a Person");
-		System.out.println("(3) List Persons");		
+		clearConsole();
+
+		System.out.println("(1) Create");
+		System.out.println("(2) Search");
+		System.out.println("(3) List Persons");
 
 		System.out.print("What would you like to do? ");
 		String option = console.readLine();
 
 		return option;
 
-	}	
+	}
 
-	private void listPersons(List <PersonDTO> persons) {
+	private void listPersons(List<PersonDTO> persons, boolean clear) {
+
+		logger.debug("Listing persons!");
 		
-		logger.debug("Listing persons!");	
-		
-		clear();
-		
-		if(persons.isEmpty()) {
-			
-			System.out.println("There is no any person at the moment!\n");		
-			System.out.println("(1) Create new person (Anything) (2) Search person (Anything)To return to the Initial Screen");
-			
+		if(clear) {
+			clearConsole();
+		}
+
+		if (persons.isEmpty()) {
+
+			System.out.println("There is no any person at the moment!\n");
+			System.out.println("(1) Create Person (2) Search Person (Anything)To return to the Initial Screen");
+
 			System.out.print("What would you like to do? : ");
-			
+
 			String option = console.readLine();
-			
+
 			switch (option) {
 
-				case "1": // Create Person
-		
-					createNewPerson();		
-					break;
-					
-				case "2": // Search Person
-					
-					search();		
-					break;
-		
-				default : 
-					
-					start();		
-					break;
+			case "1": // Create Person
+
+				createNewPerson();
+				break;
+
+			case "2": // Search Person
+
+				search();
+				break;
+
+			default:
+
+				start();
+				break;
 			}
-			
-		}else {
-			
-			System.out.println("id  " +"|"+ "\tName " +"|"+ "\t\tSurname");
-			for(PersonDTO person : persons) {
-				
-				System.out.println(person.getId() + "\t" +person.getName() + " \t\t" + person.getSurName());
-				
-			}		
-			
-			System.out.println("");			
-			System.out.println("(1) Delete (2) Edit (Anything) To return to the Initial Screen");
+
+		} else {
+
+			System.out.println("Id  " + "\tName " + "\tSurname");
+			for (PersonDTO person : persons) {
+
+				System.out.println(person.getId() + "\t" + person.getName() + " \t" + person.getSurName());
+
+			}
+
+			System.out.println("");
+			System.out.println("(1) Delete Person (2) Edit (Anything) To return to the Initial Screen");
 			System.out.print("What would you like to do? : ");
 			String option = console.readLine();
-			
+
 			switch (option) {
 
-				case "1": // Delete
-					
-					logger.debug("Case 1: Deleting...");	
-					
-					deletePerson();
-									
-					break;
-				case "2": //Edit					
-					
-					logger.debug("Editing...");
-					
-					editPerson(persons);							
-					
-					break;	
-					
-				default :
-					
-					start();								
-					break;						
-		
+			case "1": // Delete
+
+				logger.debug("Case 1: Deleting...");
+
+				deletePerson();
+
+				break;
+			case "2": // Edit
+
+				logger.debug("Editing...");
+
+				editPerson(persons);
+
+				break;
+
+			default:
+
+				start();
+				break;
+
 			}
-		
-		}			
-		
+
+		}
+
 	}
 
 	private void editPerson(List<PersonDTO> persons) {
-		
+
 		System.out.print("Which person would you like to edit? Type the id: ");
-		String id = console.readLine();		
-						
+		String id = console.readLine();
+
 		try {
-			
+
 			PersonDTO personEdit = null;
-			
-			for(PersonDTO person :persons) {
-				
-				if(person.getId() == Integer.valueOf(id)) {
-												
+
+			for (PersonDTO person : persons) {
+
+				if (person.getId() == Integer.valueOf(id)) {
+
 					personEdit = person;
-					
-					break;							
+
+					break;
 				}
-				
+
 			}
-			
-			while(true) {
-				
-				if(!ObjectUtils.isEmpty(personEdit)) {
-					
+
+			while (true) {
+
+				if (!ObjectUtils.isEmpty(personEdit)) {
+
 					System.out.print("Enter the new first name: ");
 					String newName = console.readLine();
-					
+
 					if (!ObjectUtils.isEmpty(newName)) {
 
 						personEdit.setName(newName);
 
 					} else {
-						
+
 						System.out.println("Name cannot be empty... ");
 						continue;
 
 					}
-					
+
 					System.out.print("Enter the new second name: ");
-					String newSurName = console.readLine();		
-					
+					String newSurName = console.readLine();
+
 					if (!ObjectUtils.isEmpty(newSurName)) {
 
 						personEdit.setSurName(newSurName);
 
 					} else {
-						
+
 						System.out.println("Surname cannot be empty... ");
 						continue;
 
-					}			
-					
+					}
+
+					System.out.print("Edit the Address? (Y)Yes (N)No :");
+					Boolean editAddress = console.readLine().equalsIgnoreCase("Y") ? true : false;
+
+					if (editAddress) {
+
+						editAddress(personEdit, true);
+
+					}
+
 					personBusinessManager.save(personEdit);
-					
-					listPersons(personBusinessManager.findAll());
-					
+
+					listPersons(personBusinessManager.findAll(), !editAddress);
+
 					break;
-					
-				}else {
-					
-					//call the method again so the user can type an valid id
+
+				} else {
+
+					// call the method again so the user can type an valid id
 					System.out.println("Person id =" + id + " not found!");
 					editPerson(persons);
-					
+
 				}
-			
+
 			}
-			
+
 		} catch (NumberFormatException e) {
-			
+
 			logger.debug(e.getMessage());
-			
-			//call the method again so the user can type an valid id
-			editPerson(persons);			
-			
+
+			// call the method again so the user can type an valid id
+			editPerson(persons);
+
 		}
 	}
 
-	private void deletePerson() {
-				
-		while(true) {
+	private void editAddress(PersonDTO person, Boolean clear) {
+
+		logger.debug("Listing Address(es)!");
+		
+		if(clear) {
 			
-			System.out.print("Type the id of the Person you would like to delete: ");
+			clearConsole();
+			
+		}		
+
+		System.out.println("Id" + "\tStreet" + "\tCity" + "\tState" + "\tPostal Code");
+		for (AddressDTO address : person.getAddresses()) {
+
+			System.out.println(address.getId() + "\t" + address.getStreet() + "\t" + address.getCity() + "\t"
+					+ address.getState() + "\t" + address.getPostalCode());
+
+		}
+
+		System.out.println("");
+		System.out.println("(1) Delete address (2) Edit address");
+		System.out.print("What would you like to do? ");
+		String option = console.readLine();
+
+		switch (option) {
+
+			case "1": // Delete
+				
+				logger.debug("Case 1: Deleting...");
+									
+				deleteAddress(person);		
+
+			break;
+			
+			case "2": // Edit
+	
+				logger.debug("Editing...");
+	
+				// editPerson(persons);
+	
+			break;
+	
+			default:
+	
+				// start();
+				break;
+	
+			}
+
+	}
+
+	private void deleteAddress(PersonDTO person) {
+			
+		while (true) {
+
+			System.out.print("Which address you would like to delete? Id : ");
 			String id = console.readLine();
-			
+
 			try {
-				
-				if(ObjectUtils.isEmpty(id)) {
+
+				if (ObjectUtils.isEmpty(id)) {
+
 					System.out.println("Type a valid id...");
 					continue;
-					
-				}										
-							
-				PersonDTO personFound = personBusinessManager.findPersonById(Integer.valueOf(id));
-				
-				if(ObjectUtils.isEmpty(personFound.getId())) {
-					
-					System.out.println("Person id = " + id + " not found!");					
-					continue;
-					
+
 				}
+
+				List<AddressDTO> addresses = person.getAddresses();
+				
+				AddressDTO addressToBeRemoved = null;
 								
-				personBusinessManager.delete(Integer.valueOf(id));				
-				logger.debug("Person deleted with success!");	
+				for (AddressDTO address : addresses) {
+
+					if (address.getId() == Integer.valueOf(id)) {
+								
+						addressToBeRemoved = address;
+
+					}
+
+				}
+			
+				person.getAddresses().remove(addressToBeRemoved);
 				
-				listPersons(personBusinessManager.findAll());		
-				
+				System.out.println("Address deleted with success!");
+
 				break;
 
-				
 			} catch (NumberFormatException e) {
 				
 				logger.debug(e.getMessage());
-				System.out.println("Person id must be a number!");				
+				e.printStackTrace();
 				
-			}
+			} catch(Exception e) {
+				
+				logger.debug(e.getMessage());
+				e.printStackTrace();
+				
+			}				
 			
 		}
 		
 	}
-	
+
+	private void deletePerson() {
+
+		while (true) {
+
+			System.out.print("Type the id of the Person you would like to delete: ");
+			String id = console.readLine();
+
+			try {
+
+				if (ObjectUtils.isEmpty(id)) {
+					System.out.println("Type a valid id...");
+					continue;
+
+				}
+
+				PersonDTO personFound = personBusinessManager.findPersonById(Integer.valueOf(id));
+
+				if (ObjectUtils.isEmpty(personFound.getId())) {
+
+					System.out.println("Person id = " + id + " not found!");
+					continue;
+
+				}
+
+				personBusinessManager.delete(Integer.valueOf(id));
+				logger.debug("Person deleted with success!");
+
+				listPersons(personBusinessManager.findAll(),true);
+
+				break;
+
+			} catch (NumberFormatException e) {
+
+				logger.debug(e.getMessage());
+				System.out.println("Person id must be a number!");
+
+			}
+
+		}
+
+	}
 
 	/**
 	 * Clears the console
 	 * 
 	 * 
 	 */
-	private void clear() {
-		
-		 System.out.print("\033[H\033[2J");  
-		 System.out.flush();  
-		 
+	private void clearConsole() {
+
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+
 	}
 
 	/**
@@ -267,60 +383,60 @@ public class ScreenController implements IScreenController {
 
 		switch (option) {
 
-			case "1": // Create Person
-	
-				createNewPerson();
-	
-				break;
-	
-			case "2": //Search
-				
-				search();
-				
-				break;
-				
-			case "3": //List
-				
-				List<PersonDTO> personsList = personBusinessManager.findAll();
-				
-				listPersons(personsList);			
-				
-				break;
-	
-			default:
-				
-				start();
-	
-				break;
+		case "1": // Create Person
+
+			createNewPerson();
+
+			break;
+
+		case "2": // Search
+
+			search();
+
+			break;
+
+		case "3": // List
+
+			List<PersonDTO> personsList = personBusinessManager.findAll();
+
+			listPersons(personsList, true);
+
+			break;
+
+		default:
+
+			start();
+
+			break;
 
 		}
 
 	}
 
 	private void search() {
-		
-		while(true) {
-			
+
+		while (true) {
+
 			System.out.print("Type any person data: ");
 			String data = console.readLine();
-			
-			if(!ObjectUtils.isEmpty(data)) {
-				
-				listPersons(personBusinessManager.findPerson(data));
+
+			if (!ObjectUtils.isEmpty(data)) {
+
+				listPersons(personBusinessManager.findPerson(data), true);
 				break;
-				
-			}else {
-				
-				continue;				
-				
-			}		
-			
+
+			} else {
+
+				continue;
+
+			}
+
 		}
-		
+
 	}
 
 	private void createNewPerson() {
-		
+
 		logger.info("Creating Person(s)");
 
 		Boolean createNew = true;
@@ -373,7 +489,15 @@ public class ScreenController implements IScreenController {
 
 			}
 
-			newObject = true;
+			if (ObjectUtils.isEmpty(person.getAddresses())) {
+
+				person.setAddresses(new ArrayList<AddressDTO>());
+
+				fillAddress(person);
+
+			}
+
+			newObject = true;// A new Person will be created on the next iteration of the loop
 
 			// Add to list of created persons
 			persons.add(person);
@@ -391,6 +515,115 @@ public class ScreenController implements IScreenController {
 			}
 
 		}
+	}
+
+	private void fillAddress(PersonDTO person) {
+
+		logger.debug("filling the adress...");
+
+		AddressDTO address = null;
+		Boolean newAddress = true;
+		String street = null;
+		String city = null;
+		String state = null;
+		String postalCode = null;
+		Boolean createNewAddress = true;
+
+		while (createNewAddress) {
+
+			if (newAddress) {
+
+				address = new AddressDTO();
+
+			}
+
+			// Set Street
+			if (ObjectUtils.isEmpty(address.getStreet())) {
+
+				System.out.print("Enter the street address: ");
+				street = console.readLine();
+			}
+
+			if (!ObjectUtils.isEmpty(street)) {
+
+				address.setStreet(street);
+
+			} else {
+
+				newAddress = false;
+				continue;
+
+			}
+
+			// Set City
+			if (ObjectUtils.isEmpty(address.getCity())) {
+
+				System.out.print("Enter the city address: ");
+				city = console.readLine();
+			}
+
+			if (!ObjectUtils.isEmpty(city)) {
+
+				address.setCity(city);
+
+			} else {
+
+				newAddress = false;
+				continue;
+
+			}
+
+			// Set State
+			if (ObjectUtils.isEmpty(address.getState())) {
+
+				System.out.print("Enter the state address: ");
+				state = console.readLine();
+			}
+
+			if (!ObjectUtils.isEmpty(state)) {
+
+				address.setState(city);
+
+			} else {
+
+				newAddress = false;
+				continue;
+
+			}
+
+			// Set Postal code
+			if (ObjectUtils.isEmpty(address.getPostalCode())) {
+
+				System.out.print("Enter the postal code: ");
+				postalCode = console.readLine();
+			}
+
+			if (!ObjectUtils.isEmpty(postalCode)) {
+
+				address.setPostalCode(postalCode);
+
+			} else {
+
+				newAddress = false;
+				continue;
+
+			}
+
+			newAddress = true;
+			street = null;
+			city = null;
+			state = null;
+			postalCode = null;
+
+			person.getAddresses().add(address);
+
+			System.out.print("Add more addresses? (Y) Yes (N) No : ");
+			createNewAddress = console.readLine().equalsIgnoreCase("Y") ? true : false;
+
+		}
+
+		logger.debug("Leaving filling adress...");
+
 	}
 
 }

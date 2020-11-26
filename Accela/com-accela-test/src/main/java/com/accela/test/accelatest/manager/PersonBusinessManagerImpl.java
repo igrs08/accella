@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.accela.test.accelatest.controller.ScreenController;
 import com.accela.test.accelatest.dtoservice.PersonDTO;
 import com.accela.test.accelatest.dtoservice.PersonDTOService;
+import com.accela.test.accelatest.entity.AddressTableEntity;
 import com.accela.test.accelatest.entity.PersonTableEntity;
 import com.accela.test.accelatest.service.IPersonBusinessService;
 
@@ -48,6 +49,19 @@ public class PersonBusinessManagerImpl implements IPersonBusinessManager{
 		
 			logger.info("These are the people after converting : " + personEntities.get(0).getName() +" " + personEntities.get(0).getSurName());
 					
+			
+			for(PersonTableEntity personTable : personEntities) {
+				
+				System.out.println(personTable.getName());
+				
+				for(AddressTableEntity address : personTable.getAddresses()) {
+					
+					System.out.println("This is the address" + address.getStreet());
+					
+				}
+			}
+			
+			
 			personBusinessService.saveAll(personEntities);
 			
 		} catch (Exception e) {

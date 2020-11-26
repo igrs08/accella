@@ -13,4 +13,7 @@ public interface IPersonRepository extends JpaRepository<PersonTableEntity, Inte
 	@Query("SELECT p FROM PersonTableEntity p WHERE p.name LIKE :data or p.surName LIKE :data")
 	List<PersonTableEntity> findPerson(@Param("data") String data);
 
+	@Query("SELECT p FROM PersonTableEntity p LEFT JOIN FETCH p.addresses")
+	List<PersonTableEntity> findAllFetchAddress();
+
 }

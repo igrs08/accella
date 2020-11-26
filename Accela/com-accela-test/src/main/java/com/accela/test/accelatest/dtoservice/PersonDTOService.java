@@ -1,9 +1,12 @@
 package com.accela.test.accelatest.dtoservice;
+import java.util.ArrayList;
 import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
+import com.accela.test.accelatest.entity.AddressTableEntity;
 import com.accela.test.accelatest.entity.PersonTableEntity;
 
 /**
@@ -12,18 +15,28 @@ import com.accela.test.accelatest.entity.PersonTableEntity;
  */
 @Component
 public class PersonDTOService extends BaseDTOService<PersonTableEntity, PersonDTO> {
+		
+	@Autowired	
+	private AddressDTOService addressDTOService;
 
 	@Override
 	public PersonDTO convertEntityToDto(PersonTableEntity person) {
 		
 		if (Objects.isNull(person.getId())) {
-			throw new DTOException("Class does not have a valid ID");
+			throw new DTOException("Person does not have a valid ID");
 		}
 
 		PersonDTO personDTO = new PersonDTO();
 		personDTO.setId(person.getId());
 		personDTO.setName(!ObjectUtils.isEmpty(person.getName()) ? person.getName() : "");
 		personDTO.setSurName(!ObjectUtils.isEmpty(person.getSurName()) ? person.getSurName() : "");
+		personDTO.setAddresses(new ArrayList<AddressDTO>());
+		
+		for(AddressTableEntity address : person.getAddresses()) {
+			
+			personDTO.getAddresses().add(addressDTOService.convertEntityToDto(address));			
+			
+		}
 
 		return personDTO;
 	}
@@ -32,6 +45,8 @@ public class PersonDTOService extends BaseDTOService<PersonTableEntity, PersonDT
 	public PersonTableEntity convertDtoToEntity(PersonDTO personDTO) {
 						
 		PersonTableEntity person = new PersonTableEntity();
+		
+		person.setAddresses(new ArrayList<AddressTableEntity>());
 		
 		if (Objects.nonNull(personDTO.getId())) {
 			
@@ -42,6 +57,12 @@ public class PersonDTOService extends BaseDTOService<PersonTableEntity, PersonDT
 		person.setName(!ObjectUtils.isEmpty(personDTO.getName()) ? personDTO.getName() :"");
 		person.setSurName(!ObjectUtils.isEmpty(personDTO.getSurName()) ? personDTO.getSurName() : "");
 		
+		for(AddressDTO address : personDTO.getAddresses()) {			
+
+			person.getAddresses().add(addressDTOService.convertDtoToEntity(address));
+			
+		}
+				
 		return person;
 
 	}
